@@ -38,7 +38,7 @@
         <Button
             style="@style/btnStyle"
             android:text="Customer"
-
+            android:id="@+id/customer"
             />
         <Button
             style="@style/btnStyle"

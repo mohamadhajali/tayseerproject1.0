@@ -8,13 +8,6 @@
     android:layout_height="match_parent"
     tools:context=".CustomerRecycler">
 
-    <EditText
-        style="@style/edtStyle"
-        android:id="@+id/customer_username"
-        android:alpha=".8"
-        android:background="@color/design_default_color_background"
-        android:hint="username" />
-
     <androidx.recyclerview.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/customer_recycler"
