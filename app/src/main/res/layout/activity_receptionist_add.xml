@@ -23,11 +23,14 @@
 
         <Button
             style="@style/btnStyle"
-            android:text="Add new Customer" />
-
+            android:text="Add new Customer"
+            android:id="@+id/addnewcous"
+            />
         <Button
             style="@style/btnStyle"
-            android:text="View room details" />
+            android:text="View room details"
+            android:id="@+id/viewdeatils"
+            />
 
 
     </LinearLayout>

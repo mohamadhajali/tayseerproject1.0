@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidProject">
         <activity
+            android:name=".roomdielis"
+            android:exported="true" />
+        <activity
+            android:name=".addnewcustomer"
+            android:exported="true" />
+        <activity
             android:name=".CustomerLogin"
             android:exported="true" />
         <activity

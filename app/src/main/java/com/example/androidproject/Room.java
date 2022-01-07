@@ -1,7 +1,9 @@
 package com.example.androidproject;
 
 public class Room {
-    private int id, cap, priceByDay;
+    private int id,
+            cap,
+            priceByDay;
     private String img;
 
     public Room(int id, int cap, int priceByDay, String img) {
@@ -42,4 +44,5 @@ public class Room {
     public void setImg(String img) {
         this.img = img;
     }
+
 }
