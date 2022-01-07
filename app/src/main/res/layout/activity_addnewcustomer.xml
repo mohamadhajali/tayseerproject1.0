@@ -36,5 +36,6 @@
         android:text="Save"
         style="@style/btnStyle"
         android:id="@+id/savecustmer"
+        android:onClick="btnAddOnClick"
         />
 </LinearLayout>
