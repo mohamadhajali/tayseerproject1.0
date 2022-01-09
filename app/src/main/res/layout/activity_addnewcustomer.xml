@@ -30,6 +30,13 @@
         style="@style/edtStyle"
         android:id="@+id/phonenumber"
         />
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:hint="result"
+        style="@style/edtStyle"
+        android:id="@+id/Result"
+        />
     <Button
         android:layout_width="300dp"
         android:layout_height="60dp"
