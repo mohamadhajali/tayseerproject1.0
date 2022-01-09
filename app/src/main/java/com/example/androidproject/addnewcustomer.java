@@ -5,12 +5,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -38,7 +40,7 @@ public class addnewcustomer extends AppCompatActivity {
         save = findViewById(R.id.savecustmer);
 
     }
-    private String processRequest(String restUrl) throws UnsupportedEncodingException {
+      String processRequest(String restUrl) throws UnsupportedEncodingException {
         String userName  = username.getText().toString();
         String fullName  = fullname.getText().toString();
         String phoneNum  = phonenumber.getText().toString();
@@ -112,8 +114,9 @@ public class addnewcustomer extends AppCompatActivity {
 
 
     public void btnAddOnClick(View view) throws UnsupportedEncodingException {
-        String restUrl = "http://10.0.2.2:80/mobileProject/addCustomer.php";
-        this.processRequest(restUrl);
+        String addUrl = "http://10.0.2.2:80/mobileProject/addCustomer.php";
+        Toast.makeText(addnewcustomer.this,addUrl,Toast.LENGTH_SHORT);
+
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.INTERNET)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -121,24 +124,54 @@ public class addnewcustomer extends AppCompatActivity {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.INTERNET},
                     123);
-
         } else{
-            /*SendPostRequest runner = new SendPostRequest();
-            runner.execute(restUrl);*/
+           // Toast.makeText(addnewcustomer.this,addUrl,Toast.LENGTH_SHORT);
 
-            Thread thread = new Thread(new MyTask2(restUrl));
-            thread.start();
+            SendPostRequest s = new SendPostRequest();
+            s.execute(addUrl);
+           /* Thread thread = new Thread(new AddBookRequest(addUrl));
+            thread.start();*/
         }
     }
+    private class SendPostRequest extends AsyncTask<String,Void,String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            try{
+                return processRequest(strings[0]);
+            }catch (UnsupportedEncodingException ex){
+
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Toast.makeText(addnewcustomer.this,s,Toast.LENGTH_SHORT);
+        }
+    }
+
+    class AddBookRequest implements Runnable{
+        private String url;
+        public AddBookRequest(String url){
+            this.url = url;
+        }
+        @Override
+        public void run() {
+            final String result;
+            try{
+                processRequest(url);
+
+            }catch (UnsupportedEncodingException ex){
+
+                ex.printStackTrace();
+            }
+        }
+    }
+
+
+
 }
 
-class MyTask2 implements Runnable{
-    private String url;
-    public MyTask2(String url){
-        this.url = url;
-    }
-    @Override
-    public void run() {
 
-    }
-}
