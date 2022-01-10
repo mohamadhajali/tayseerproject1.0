@@ -44,7 +44,7 @@
 
         <EditText
             style="@style/edtStyle"
-            android:id="@+id/password_toggle"
+            android:id="@+id/password"
             android:alpha=".8"
             android:background="@color/design_default_color_background"
             android:hint="Password" />
