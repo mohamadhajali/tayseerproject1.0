@@ -46,6 +46,12 @@
             android:id="@+id/receptionist"
             />
 
+        <Button
+            style="@style/btnStyle"
+            android:text="recycler"
+            android:onClick="recy"
+            />
+
 
     </LinearLayout>
 </FrameLayout>

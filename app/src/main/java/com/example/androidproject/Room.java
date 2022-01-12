@@ -1,16 +1,42 @@
 package com.example.androidproject;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+
 public class Room {
     private int id,
-            cap,
+            capacity,
             priceByDay;
-    private String img;
+    private String image;
 
-    public Room(int id, int cap, int priceByDay, String img) {
+//    private String name;
+//    private int imageId;
+
+//    public static final Room[] rooms = {
+//            new Room ("room1", R.drawable.room1),
+//            new Room ("room2", R.drawable.room2)
+//    };
+
+
+    public Room(int id, int capacity, int priceByDay, String image) {
         this.id = id;
-        this.cap = cap;
+        this.capacity = capacity;
         this.priceByDay = priceByDay;
-        this.img = img;
+        this.image = image;
     }
 
     public int getId() {
@@ -21,12 +47,12 @@ public class Room {
         this.id = id;
     }
 
-    public int getCap() {
-        return cap;
+    public int getCapacity() {
+        return capacity;
     }
 
-    public void setCap(int cap) {
-        this.cap = cap;
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
     public int getPriceByDay() {
@@ -37,12 +63,11 @@ public class Room {
         this.priceByDay = priceByDay;
     }
 
-    public String getImg() {
-        return img;
+    public String getImage() {
+        return image;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setImage(String image) {
+        this.image = image;
     }
-
 }

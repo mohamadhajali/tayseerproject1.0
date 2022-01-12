@@ -59,7 +59,7 @@ public class LoginReceptionist extends AppCompatActivity {
     public void btnAddOnClick(View view)
     {
 
-        String url = "http://192.168.1.108:80/mobileProject/loginres.php";
+        String url = "http://192.168.1.113:80/mobileProject/loginres.php";
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.INTERNET)
                 != PackageManager.PERMISSION_GRANTED) {

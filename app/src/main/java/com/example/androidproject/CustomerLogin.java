@@ -35,7 +35,7 @@ public class CustomerLogin extends AppCompatActivity {
     }
 
     public void btnLoginClick(View view) {
-        String url = "http://192.168.1.11:80/mobileProject/login.php?userName="+usernameEdt.getText();
+        String url = "http://192.168.1.113:80/mobileProject/login.php?userName="+usernameEdt.getText();
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.INTERNET)
                 != PackageManager.PERMISSION_GRANTED) {
