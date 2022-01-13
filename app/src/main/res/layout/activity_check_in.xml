@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CheckIn"
+    android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            style="@style/edtStyle"
+            android:id="@+id/roomId"
+            android:layout_marginBottom="0dp"
+            android:layout_gravity="left">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            style="@style/edtStyle"
+            android:id="@+id/roomCapacity"
+            android:layout_marginBottom="0dp"
+            android:layout_gravity="left">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            style="@style/edtStyle"
+            android:id="@+id/roomPriceByDay"
+            android:layout_marginBottom="80dp"
+            android:layout_gravity="left">
+        </TextView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="check in date"
+            style="@style/edtStyle"
+            ></TextView>
+        <EditText
+            android:id="@+id/checkindate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="date"
+            style="@style/edtStyle"
+            android:shadowColor="@color/purple_700"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="check out date"
+        style="@style/edtStyle"
+        ></TextView>
+    <EditText
+        android:id="@+id/chekoutdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="date"
+        style="@style/edtStyle"
+        android:shadowColor="@color/purple_700"
+        />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/checkinbutton"
+        style="@style/btnStyle"
+        android:layout_width="131dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:onClick="calculateDate"
+        android:text="Check In">
+
+    </Button>
+
+</LinearLayout>

@@ -23,14 +23,6 @@ public class Room {
             priceByDay;
     private String image;
 
-//    private String name;
-//    private int imageId;
-
-//    public static final Room[] rooms = {
-//            new Room ("room1", R.drawable.room1),
-//            new Room ("room2", R.drawable.room2)
-//    };
-
 
     public Room(int id, int capacity, int priceByDay, String image) {
         this.id = id;

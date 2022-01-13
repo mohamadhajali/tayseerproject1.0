@@ -47,16 +47,20 @@
             android:id="@+id/password"
             android:alpha=".8"
             android:background="@color/design_default_color_background"
-            android:hint="Password" />
+            android:hint="Password"
+            android:inputType="textPassword"
+
+            />
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/saveLoginCheckBox"
             android:layout_width="165dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Remindar me"
             android:fontFamily="@font/gist_light"
             android:background="@color/cardview_light_background"
+
             />
 
         <Button
@@ -68,6 +72,7 @@
             android:alpha=".8"
             android:padding="15dp"
             android:text="login"
+            android:onClick="btnLoginClick"
             />
 
 

@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -35,11 +35,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerRecycler extends AppCompatActivity {
+    private static final String url = "http://192.168.1.115:80/mobileProject/get_items.php";
+    public static final String DEFAULT = "N/A";
 
-    private static final String url = "http://192.168.1.113:80/mobileProject/getRoom.php";
-    List<Room> roomList;
-    RecyclerView recycler;
-
+    private ArrayList<Room> roomList = new ArrayList<>();
+    private RecyclerView recycler;
+    onClickInterface  onclickInterface ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,112 +49,89 @@ public class CustomerRecycler extends AppCompatActivity {
         Intent intent = getIntent();
 
         recycler = findViewById(R.id.customer_recycler);
-        recycler.setHasFixedSize(true);
-        recycler.setLayoutManager(new LinearLayoutManager(this));
-
-        roomList = new ArrayList<>();
-
-//        ArrayList<String> roomList = new ArrayList<>();
-//
-//        RecyclerView recycler = (RecyclerView) findViewById(R.id.customer_recycler);
-
-//        String[] description = new String [Room.rooms.length];
-//        int[] ids = new int[Room.rooms.length];
-//
-//        for(int i=0; i<description.length; i++){
-//            description[i] = Room.rooms[i].getName();
-//            ids[i] = Room.rooms[i].getImageId();
-//        }
-
-
-
-        loadRooms();
-        /*
-        RecyclerView recycler = (RecyclerView) findViewById(R.id.customer_recycler);
-
-        String[] description = new String [Room.rooms.length];
-        int[] ids = new int[Room.rooms.length];
-
-        for(int i=0; i<description.length; i++){
-            description[i] = Room.rooms[i].getName();
-            ids[i] = Room.rooms[i].getImageId();
-        }
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
-        RecyclerAdapter adapter = new RecyclerAdapter(description, ids);
-        recycler.setAdapter(adapter);
-         */
+        loadItems();
+        click();
+
     }
+public void click(){
+    onclickInterface = new onClickInterface() {
+        @Override
+        public void setClick(String id , String Capacity , String price) {
+            //Toast.makeText(CustomerRecycler.this,"Position is"+abc,Toast.LENGTH_LONG).show();
+            SharedPreferences sharedPref = getSharedPreferences("MyData",MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("RoomID",id);
+            editor.putString("Capacity",Capacity);
+            editor.putString("Price",price);
+            editor.commit();
 
-    public void loadRooms(){
+        connn();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray rooms = new JSONArray(response);
+        }
+    };
+}
+public  void connn(){
+    SharedPreferences sharedPreferences = getSharedPreferences("MyData", MODE_PRIVATE);
+    String rid= sharedPreferences.getString("RoomID",DEFAULT);
 
-                    for(int i=0; i<rooms.length(); i++){
-                        JSONObject roomObject = rooms.getJSONObject(i);
+    int id = Integer.parseInt(rid);
+    String url2 = "http://192.168.1.115:80/mobileProject/isReserved.php?roomID="+id;
+    if (ContextCompat.checkSelfPermission(this,
+            Manifest.permission.INTERNET)
+            != PackageManager.PERMISSION_GRANTED) {
 
-                        roomList.add(new Room(
-                                roomObject.getInt("id"),
-                                roomObject.getInt("capacity"),
-                                roomObject.getInt("priceByDay"),
-                                roomObject.getString("image")
-                        ));
-                        /*
-                        int id = roomObject.getInt(id);
-                        int capacity = roomObject.getInt(capacity);
-                        int priceByDay = roomObject.getInt(priceByDay);
-                        String image = roomObject.getString(image);
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.INTERNET},
+                123);
 
-                        Room room = new Room(id, capacity, priceByDay, image);
-                        roomList.add(room);
+    } else{
+        CustomerRecycler.LoginTask log = new CustomerRecycler.LoginTask();
+        log.execute(url2);
 
-                         */
+    }
+}
+    private void loadItems() {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                response -> {
+
+                    try {
+                        JSONArray array = new JSONArray(response);
+                            System.out.println(array.toString());
+                        for (int i = 0; i<array.length(); i++){
+                            JSONObject roomObject = array.getJSONObject(i);
+
+                            int id = roomObject.getInt("roomID");
+                            int capacity = roomObject.getInt("capacity");
+                            int priceByDay = roomObject.getInt("priceByDay");
+                            String image = roomObject.getString("image");
+
+                            Room room = new Room(id, capacity, priceByDay, image);
+                            roomList.add(room);
+
+                        }
+                    }catch (Exception e){
+
                     }
-                    RecyclerAdapter adapter = new RecyclerAdapter(CustomerRecycler.this, roomList);
+                    RecyclerAdapter adapter = new RecyclerAdapter(CustomerRecycler.this,
+                            roomList,onclickInterface);
                     recycler.setAdapter(adapter);
+                    for (int i = 0 ;i<roomList.size();i++){
+                        System.out.println(roomList.get(i).toString());
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
+                    }
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(CustomerRecycler.this, error.getMessage(), Toast.LENGTH_LONG);
+
+                Toast.makeText(CustomerRecycler.this, error.toString(),Toast.LENGTH_LONG).show();
             }
         });
-        Volley.newRequestQueue(this).add(stringRequest);
 
+        Volley.newRequestQueue(CustomerRecycler.this).add(stringRequest);
     }
-/*
-    private void custRec() {
-
-    }
-
-
-
-    public void btnLoginClick(View view) {
-        String url = "http://192.168.1.113:80/mobileProject/login.php?userName="+usernameEdt.getText();
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.INTERNET)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.INTERNET},
-                    123);
-
-        } else{
-            CustomerRecycler.CustomerRecyclerTask log = new CustomerRecycler.CustomerRecyclerTask();
-            log.execute(url);
-
-        }
-    }
-
     private InputStream OpenHttpConnection(String urlString) throws IOException
     {
         InputStream in = null;
@@ -210,25 +188,31 @@ public class CustomerRecycler extends AppCompatActivity {
             Log.d("Networking", e.getLocalizedMessage());
             return "";
         }
+        System.out.println(str);
         return str;
     }
-
-
-    private class CustomerRecyclerTask extends AsyncTask<String,Void,String> {
+    private class LoginTask extends AsyncTask<String,Void,String> {
 
         @Override
-        protected String doInBackground(String... strings) {
-            return DownloadText(strings[0]);
+        protected String doInBackground(String... urls) {
+
+            return DownloadText(urls[0]);
         }
 
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(CustomerRecycler.this,result,Toast.LENGTH_SHORT).show();
-            if(result.equals("Log in successfully"))
-                custRec();
+         //   Toast.makeText(LoginReceptionist.this,result,Toast.LENGTH_SHORT).show();
+            if(result.equals("This room is reserved")){
+                Toast.makeText(CustomerRecycler.this,result,Toast.LENGTH_SHORT).show();
+
+            }else if(result.equalsIgnoreCase("This room id doesn't exist")){
+                Toast.makeText(CustomerRecycler.this,result,Toast.LENGTH_SHORT).show();
+
+            }else{
+                //click();
+                Intent intent =new Intent(CustomerRecycler.this, CheckIn.class);
+                startActivity(intent);
+            }
         }
     }
-    */
-
-
 }
