@@ -40,6 +40,7 @@ public class CustomerRecycler extends AppCompatActivity {
 
     private ArrayList<Room> roomList = new ArrayList<>();
     private RecyclerView recycler;
+    private String userName;
     onClickInterface  onclickInterface ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +49,11 @@ public class CustomerRecycler extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        recycler = findViewById(R.id.customer_recycler);
+       recycler = findViewById(R.id.customer_recycler);
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
+        userName = intent.getStringExtra("userName");
+        Toast.makeText(this,userName,Toast.LENGTH_SHORT);
         loadItems();
         click();
 
@@ -211,6 +214,7 @@ public  void connn(){
             }else{
                 //click();
                 Intent intent =new Intent(CustomerRecycler.this, CheckIn.class);
+                intent.putExtra("userName",userName);
                 startActivity(intent);
             }
         }

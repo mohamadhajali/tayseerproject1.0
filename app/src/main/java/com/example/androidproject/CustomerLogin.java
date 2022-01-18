@@ -31,6 +31,7 @@ public class CustomerLogin extends AppCompatActivity {
 
     private void logInCustmer() {
         Intent intent =new Intent(CustomerLogin.this, CustomerRecycler.class);
+        intent.putExtra("userName",usernameEdt.getText());
         startActivity(intent);
     }
 

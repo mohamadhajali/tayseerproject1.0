@@ -3,6 +3,7 @@ package com.example.androidproject;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,10 +26,13 @@ public class CheckIn extends AppCompatActivity {
     EditText checkoutdate;
     Button checkin;
     String price;
+    String userName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_in);
+        Intent intent = getIntent();
+        userName = intent.getStringExtra("userName");
         SharedPreferences sharedPreferences = getSharedPreferences("MyData", MODE_PRIVATE);
         String rid= sharedPreferences.getString("RoomID",DEFAULT);
         String capacity =  sharedPreferences.getString("Capacity",DEFAULT);
